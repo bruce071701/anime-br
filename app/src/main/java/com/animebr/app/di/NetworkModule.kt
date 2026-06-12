@@ -47,4 +47,10 @@ object NetworkModule {
     fun providePlayerApiService(retrofit: Retrofit): PlayerApiService {
         return retrofit.create(PlayerApiService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideAnimeListApiService(retrofit: Retrofit): com.animebr.app.data.api.AnimeListApiService {
+        return retrofit.create(com.animebr.app.data.api.AnimeListApiService::class.java)
+    }
 }

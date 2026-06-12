@@ -23,16 +23,27 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AnimeBRDatabase {
-        // Decrypt the compressed+encrypted db from assets on first run
         val dbFile = DatabaseDecryptor.getDecryptedDbFile(context)
+        val dbPath = context.getDatabasePath("animebr.db")
 
         return Room.databaseBuilder(
             context,
             AnimeBRDatabase::class.java,
             "animebr.db"
         )
-            .createFromFile(dbFile)
-            .fallbackToDestructiveMigration()
+            .apply {
+                // Only use createFromFile on first install (DB doesn't exist yet)
+                if (!dbPath.exists()) {
+                    createFromFile(dbFile)
+                }
+            }
+            // Use addMigrations with empty migration to preserve user data on version bump
+            .addMigrations(object : androidx.room.migration.Migration(1, 2) {
+                override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                    // No schema changes - just bump version without destroying data
+                }
+            })
+            .fallbackToDestructiveMigrationOnDowngrade()
             .build()
     }
 

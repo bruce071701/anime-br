@@ -73,9 +73,19 @@ fun HomeScreen(
                 onItemClick = { item ->
                     scope.launch { drawerState.close() }
                     when (item) {
-                        DrawerItem.INICIO -> { /* already on home */ }
+                        DrawerItem.INICIO -> {
+                            navController.navigate(NavRoutes.Home.route) {
+                                popUpTo(NavRoutes.Home.route) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
                         DrawerItem.COMPARTILHAR -> shareApp(context)
-                        else -> item.route?.let { navController.navigate(it) }
+                        else -> item.route?.let { route ->
+                            navController.navigate(route) {
+                                popUpTo(NavRoutes.Home.route) { inclusive = false }
+                                launchSingleTop = true
+                            }
+                        }
                     }
                 }
             )

@@ -54,6 +54,7 @@ import coil.compose.SubcomposeAsyncImage
 fun HistoryScreen(
     onBackClick: () -> Unit,
     onAnimeClick: (Int) -> Unit,
+    onEpisodeClick: (Int, Int) -> Unit = { _, _ -> },
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
     val historyItems by viewModel.historyItems.collectAsStateWithLifecycle()
@@ -130,7 +131,7 @@ fun HistoryScreen(
                 items(historyItems) { item ->
                     HistoryListItem(
                         item = item,
-                        onClick = { item.anime?.let { onAnimeClick(it.id) } }
+                        onClick = { onEpisodeClick(item.history.animeId, item.history.episodeId) }
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                 }

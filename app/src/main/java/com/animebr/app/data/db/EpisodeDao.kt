@@ -1,6 +1,8 @@
 package com.animebr.app.data.db
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.animebr.app.data.model.Episode
 import kotlinx.coroutines.flow.Flow
@@ -39,4 +41,7 @@ interface EpisodeDao {
 
     @Query("SELECT COUNT(*) FROM episodes WHERE animeId = :animeId")
     suspend fun getEpisodeCount(animeId: Int): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertAll(episodes: List<Episode>)
 }

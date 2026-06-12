@@ -1,6 +1,8 @@
 package com.animebr.app.data.db
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.animebr.app.data.model.Anime
 import kotlinx.coroutines.flow.Flow
@@ -37,4 +39,7 @@ interface AnimeDao {
 
     @Query("SELECT * FROM animes WHERE isDubbing = 0 ORDER BY createdAt DESC LIMIT :limit OFFSET :offset")
     suspend fun getSubbed(limit: Int, offset: Int): List<Anime>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertAll(animes: List<Anime>)
 }

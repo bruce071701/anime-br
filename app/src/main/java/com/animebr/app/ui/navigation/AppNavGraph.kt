@@ -120,6 +120,9 @@ fun AppNavGraph(
                 onBackClick = { navController.popBackStack() },
                 onAnimeClick = { animeId ->
                     navController.navigate(NavRoutes.Detail.createRoute(animeId))
+                },
+                onEpisodeClick = { animeId, episodeId ->
+                    navController.navigate(NavRoutes.EpisodeSelect.createRoute(animeId, episodeId))
                 }
             )
         }
