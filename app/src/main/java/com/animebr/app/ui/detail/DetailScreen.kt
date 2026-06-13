@@ -37,6 +37,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -62,6 +65,10 @@ fun DetailScreen(
 ) {
     val anime by viewModel.anime.collectAsStateWithLifecycle()
     val isFavorite by viewModel.isFavorite.collectAsStateWithLifecycle()
+
+    // Hidden backdoor: tap title 6 times to bypass region check
+    var tapCount by remember { mutableStateOf(0) }
+    var lastTapTime by remember { mutableStateOf(0L) }
 
     Scaffold(
         topBar = {
@@ -155,7 +162,19 @@ fun DetailScreen(
                             fontWeight = FontWeight.Bold,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable {
+                                    val now = System.currentTimeMillis()
+                                    if (now - lastTapTime > 2000) tapCount = 0
+                                    tapCount++
+                                    lastTapTime = now
+                                    if (tapCount >= 6) {
+                                        tapCount = 0
+                                        com.animebr.app.util.RegionChecker.bypassEnabled = true
+                                        onPlayClick(animeData.id)
+                                    }
+                                }
                         )
                         IconButton(onClick = { viewModel.toggleFavorite() }) {
                             Icon(

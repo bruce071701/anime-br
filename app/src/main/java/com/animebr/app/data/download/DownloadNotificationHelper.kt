@@ -19,7 +19,7 @@ class DownloadNotificationHelper @Inject constructor(
     companion object {
         private const val CHANNEL_ID = "download_channel"
         private const val CHANNEL_NAME = "Downloads"
-        const val ACTION_OPEN_DOWNLOADS = "com.animebr.app.OPEN_DOWNLOADS"
+        const val ACTION_OPEN_DOWNLOADS = "com.animetv.br.player.OPEN_DOWNLOADS"
     }
 
     init {

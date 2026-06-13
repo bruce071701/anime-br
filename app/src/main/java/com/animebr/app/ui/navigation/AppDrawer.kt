@@ -227,7 +227,7 @@ fun getAppVersion(context: Context): String {
 }
 
 fun shareApp(context: Context) {
-    val shareText = "Todos os animes são 100% gratuitos para assistir! https://play.google.com/store/apps/details?id=br.anime.tv.animetv.animes.online"
+    val shareText = "Todos os animes são 100% gratuitos para assistir! https://play.google.com/store/apps/details?id=com.animetv.br.player"
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, shareText)

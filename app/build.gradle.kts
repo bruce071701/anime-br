@@ -18,7 +18,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.animebr.app"
+        applicationId = "com.animetv.br.player"
         minSdk = 26
         targetSdk = 35
         versionCode = 100000

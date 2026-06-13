@@ -41,6 +41,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.animebr.app.data.model.Player
 import com.animebr.app.ui.rating.RatingDialog
 import com.animebr.app.ui.rating.RatingManager
+import com.animebr.app.util.RegionChecker
 
 @Composable
 fun EpisodeSelectScreen(
@@ -50,12 +51,22 @@ fun EpisodeSelectScreen(
     ratingManager: RatingManager,
     viewModel: EpisodeSelectViewModel = hiltViewModel()
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     val anime by viewModel.anime.collectAsStateWithLifecycle()
     val episode by viewModel.episode.collectAsStateWithLifecycle()
     val players by viewModel.players.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val error by viewModel.error.collectAsStateWithLifecycle()
     val showDownloadToast by viewModel.showDownloadToast.collectAsStateWithLifecycle()
+
+    // Region check: if not in Brazil, redirect to YouTube directly
+    LaunchedEffect(anime) {
+        val animeName = anime?.name
+        if (animeName != null && !RegionChecker.isBrazilianUser(context)) {
+            RegionChecker.openYouTubeSearch(context, animeName)
+            onBackClick()
+        }
+    }
 
     // Show snackbar when download starts
     val snackbarHostState = remember { androidx.compose.material3.SnackbarHostState() }
