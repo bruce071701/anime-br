@@ -27,7 +27,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(keystoreProperties.getProperty("storeFile", "release-keystore.jks"))
+            storeFile = file(keystoreProperties.getProperty("storeFile", "../anime_br.jks"))
             storePassword = keystoreProperties.getProperty("storePassword", "")
             keyAlias = keystoreProperties.getProperty("keyAlias", "")
             keyPassword = keystoreProperties.getProperty("keyPassword", "")

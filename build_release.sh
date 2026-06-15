@@ -26,8 +26,8 @@ if [ ! -f "keystore.properties" ]; then
     exit 1
 fi
 
-if [ ! -f "release-keystore.jks" ]; then
-    echo -e "${RED}❌ release-keystore.jks not found!${NC}"
+if [ ! -f "release-keystore.jks" ] && [ ! -f "anime_br.jks" ]; then
+    echo -e "${RED}❌ Keystore file not found!${NC}"
     echo "  Generate with:"
     echo "    keytool -genkey -v -keystore release-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my_alias"
     exit 1
