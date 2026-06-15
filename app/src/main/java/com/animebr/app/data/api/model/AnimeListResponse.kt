@@ -24,7 +24,8 @@ data class AnimeResponse(
     @SerializedName("visitas") val visitas: Long?,
     @SerializedName("isDubbing") val isDubbing: Int?,
     @SerializedName("nums") val nums: Int?,
-    @SerializedName("isTopic") val isTopic: Int?
+    @SerializedName("isTopic") val isTopic: Int?,
+    @SerializedName("createdAt") val createdAt: String?
 )
 
 data class EpisodeResponse(

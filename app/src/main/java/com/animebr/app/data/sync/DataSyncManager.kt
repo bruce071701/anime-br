@@ -70,7 +70,7 @@ class DataSyncManager @Inject constructor(
         isDubbing = isDubbing,
         nums = nums,
         isTopic = isTopic,
-        createdAt = null
+        createdAt = createdAt
     )
 
     private fun com.animebr.app.data.api.model.EpisodeResponse.toEntity() = Episode(
